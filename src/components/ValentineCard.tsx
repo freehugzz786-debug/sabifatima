@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
+import ReasonsCarousel from "./ReasonsCarousel";
+import DatePlannerModal from "./DatePlannerModal";
 
 const noButtonPhrases = [
   "No",
@@ -25,7 +27,9 @@ const happyGif = "https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif";
 
 const ValentineCard = () => {
   const [noClickCount, setNoClickCount] = useState(0);
-  const [accepted, setAccepted] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [dateConfirmed, setDateConfirmed] = useState(false);
+  const [selectedDate, setSelectedDate] = useState("");
   const [currentGif, setCurrentGif] = useState(sadGifs[0]);
 
   const yesButtonScale = Math.min(1 + noClickCount * 0.25, 4);
@@ -52,35 +56,45 @@ const ValentineCard = () => {
         ...defaults,
         particleCount,
         origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
-        colors: ["#ff6b8a", "#ff85a1", "#ffa7b8", "#ffccd5", "#ff4d6d"],
+        colors: ["#ff6b8a", "#ff85a1", "#ffa7b8", "#ffccd5", "#ff4d6d", "#e879f9", "#f0abfc"],
       });
       confetti({
         ...defaults,
         particleCount,
         origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
-        colors: ["#ff6b8a", "#ff85a1", "#ffa7b8", "#ffccd5", "#ff4d6d"],
+        colors: ["#ff6b8a", "#ff85a1", "#ffa7b8", "#ffccd5", "#ff4d6d", "#e879f9", "#f0abfc"],
       });
     }, 250);
   }, []);
 
   const handleYesClick = () => {
-    setAccepted(true);
+    triggerConfetti();
+    setShowDatePicker(true);
+  };
+
+  const handleDateSelect = (choice: string) => {
+    setSelectedDate(choice);
+    setDateConfirmed(true);
+    setShowDatePicker(false);
+    
+    // Trigger another confetti burst
     triggerConfetti();
     
-    // Trigger email notification
-    window.location.href = "mailto:zeyazaid@gmail.com?subject=Valentine's Day - YES! 💕&body=Someone said YES to being your Valentine! 🎉❤️";
+    // Trigger email notification with date choice
+    const subject = encodeURIComponent(`She said YES! + ${choice}`);
+    const body = encodeURIComponent(`Get ready for a ${choice}! 💕🎉`);
+    window.location.href = `mailto:zeyazaid@gmail.com?subject=${subject}&body=${body}`;
   };
 
   const handleNoClick = () => {
     setNoClickCount((prev) => prev + 1);
-    // Cycle through sad gifs
     setCurrentGif(sadGifs[(noClickCount + 1) % sadGifs.length]);
   };
 
   return (
     <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-4">
       <AnimatePresence mode="wait">
-        {!accepted ? (
+        {!dateConfirmed ? (
           <motion.div
             key="question"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -88,9 +102,12 @@ const ValentineCard = () => {
             exit={{ opacity: 0, scale: 0.8 }}
             className="card-romantic max-w-md w-full text-center"
           >
+            {/* Reasons Carousel */}
+            <ReasonsCarousel />
+
             {/* Cute GIF */}
             <motion.div
-              className="mb-6 rounded-2xl overflow-hidden mx-auto"
+              className="mb-6 rounded-2xl overflow-hidden mx-auto shadow-lg"
               style={{ maxWidth: "200px" }}
               animate={{ scale: noClickCount > 0 ? [1, 0.95, 1] : 1 }}
               transition={{ duration: 0.3 }}
@@ -109,7 +126,10 @@ const ValentineCard = () => {
               transition={{ duration: 0.5, repeat: Infinity }}
             >
               Will you be my{" "}
-              <span className="text-primary">Valentine</span>? 💕
+              <span className="text-primary bg-gradient-to-r from-primary to-accent bg-clip-text">
+                Valentine
+              </span>
+              ? 💕
             </motion.h1>
 
             {/* Buttons Container */}
@@ -123,6 +143,7 @@ const ValentineCard = () => {
                 }}
                 whileHover={{
                   scale: yesButtonScale * 1.05,
+                  boxShadow: "0 0 50px hsl(350 80% 55% / 0.5)",
                 }}
                 whileTap={{
                   scale: yesButtonScale * 0.95,
@@ -161,7 +182,7 @@ const ValentineCard = () => {
               <motion.p
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="mt-6 text-sm text-muted-foreground"
+                className="mt-6 text-sm text-muted-foreground font-handwritten text-lg"
               >
                 The Yes button is calling you... 👀
               </motion.p>
@@ -176,7 +197,7 @@ const ValentineCard = () => {
           >
             {/* Happy GIF */}
             <motion.div
-              className="mb-6 rounded-2xl overflow-hidden mx-auto"
+              className="mb-6 rounded-2xl overflow-hidden mx-auto shadow-lg"
               style={{ maxWidth: "250px" }}
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
@@ -199,12 +220,21 @@ const ValentineCard = () => {
             </motion.h1>
 
             <motion.p
-              className="text-2xl md:text-3xl text-foreground font-bold"
+              className="text-xl md:text-2xl text-foreground font-bold mb-2"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.5 }}
             >
               See you soon! ❤️
+            </motion.p>
+
+            <motion.p
+              className="text-lg font-handwritten text-primary"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ delay: 0.6 }}
+            >
+              Get ready for: {selectedDate} 🥰
             </motion.p>
 
             <motion.div
@@ -232,6 +262,9 @@ const ValentineCard = () => {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Date Planner Modal */}
+      <DatePlannerModal isOpen={showDatePicker} onSelect={handleDateSelect} />
     </div>
   );
 };

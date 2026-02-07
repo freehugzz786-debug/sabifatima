@@ -2,6 +2,8 @@
 @import url('@fontsource/nunito/600.css');
 @import url('@fontsource/nunito/700.css');
 @import url('@fontsource/nunito/800.css');
+@import url('@fontsource/dancing-script/400.css');
+@import url('@fontsource/dancing-script/700.css');
 
 @tailwind base;
 @tailwind components;
@@ -9,7 +11,7 @@
 
 @layer base {
   :root {
-    /* Romantic Valentine palette */
+    /* Dreamy Valentine palette */
     --background: 350 100% 98%;
     --foreground: 350 60% 20%;
 
@@ -49,6 +51,13 @@
     --rose: 350 80% 70%;
     --deep-rose: 350 70% 45%;
     --heart-red: 0 85% 55%;
+    --lilac: 280 60% 85%;
+    --peach: 25 100% 90%;
+    
+    /* Glassmorphism */
+    --glass-bg: 0 0% 100% / 0.25;
+    --glass-border: 0 0% 100% / 0.4;
+    --glass-shadow: 350 80% 30% / 0.1;
     
     /* Gradients */
     --gradient-romantic: linear-gradient(135deg, hsl(350 100% 98%) 0%, hsl(350 70% 95%) 50%, hsl(350 60% 92%) 100%);
@@ -60,33 +69,26 @@
     --shadow-soft: 0 4px 20px -4px hsl(350 80% 55% / 0.25);
     --shadow-glow: 0 0 40px hsl(350 80% 55% / 0.4);
     --shadow-card: 0 10px 40px -10px hsl(350 60% 30% / 0.15);
+    --shadow-glass: 0 8px 32px 0 hsl(var(--glass-shadow));
   }
 
   .dark {
     --background: 350 30% 10%;
     --foreground: 350 20% 95%;
-
     --card: 350 25% 15%;
     --card-foreground: 350 20% 95%;
-
     --popover: 350 25% 15%;
     --popover-foreground: 350 20% 95%;
-
     --primary: 350 80% 60%;
     --primary-foreground: 350 30% 10%;
-
     --secondary: 350 30% 20%;
     --secondary-foreground: 350 20% 90%;
-
     --muted: 350 25% 18%;
     --muted-foreground: 350 20% 65%;
-
     --accent: 340 70% 55%;
     --accent-foreground: 0 0% 100%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-
     --border: 350 25% 22%;
     --input: 350 25% 22%;
     --ring: 350 80% 60%;
@@ -104,9 +106,35 @@
 
   body {
     @apply bg-background text-foreground antialiased;
-    background: var(--gradient-romantic);
     min-height: 100vh;
+    overflow-x: hidden;
   }
+}
+
+/* Animated Gradient Background */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient-bg {
+  background: linear-gradient(
+    -45deg,
+    hsl(350 100% 95%),
+    hsl(280 60% 92%),
+    hsl(25 100% 93%),
+    hsl(350 80% 93%),
+    hsl(300 50% 92%)
+  );
+  background-size: 400% 400%;
+  animation: gradient-shift 15s ease infinite;
 }
 
 @layer components {
@@ -130,10 +158,46 @@
     @apply opacity-90;
   }
 
+  /* Glassmorphism card */
+  .card-glass {
+    background: rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 24px;
+    box-shadow: 
+      0 8px 32px 0 rgba(200, 100, 120, 0.15),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+  }
+
   .card-romantic {
-    @apply bg-card rounded-3xl p-8;
-    box-shadow: var(--shadow-card);
+    @apply card-glass p-8;
+  }
+
+  /* Date option cards */
+  .date-option-card {
+    background: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px solid transparent;
+    @apply rounded-2xl p-4 cursor-pointer transition-all duration-300;
+  }
+
+  .date-option-card:hover {
+    background: rgba(255, 255, 255, 0.7);
+    border-color: hsl(var(--primary));
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px -10px hsl(350 80% 55% / 0.3);
+  }
+
+  .date-option-card.selected {
+    background: hsl(350 80% 95%);
+    border-color: hsl(var(--primary));
+  }
+
+  /* Handwritten font class */
+  .font-handwritten {
+    font-family: 'Dancing Script', cursive;
   }
 }
 
@@ -160,6 +224,10 @@
 
   .text-deep-rose {
     color: hsl(var(--deep-rose));
+  }
+
+  .text-lilac {
+    color: hsl(var(--lilac));
   }
 }
 
@@ -210,4 +278,11 @@
 
 .animate-wiggle {
   animation: wiggle 0.5s ease-in-out infinite;
+}
+
+/* Heart cursor trail */
+.heart-trail {
+  pointer-events: none;
+  position: fixed;
+  z-index: 9999;
 }
