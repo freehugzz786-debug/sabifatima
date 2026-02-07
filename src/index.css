@@ -1,96 +1,95 @@
+@import url('@fontsource/nunito/400.css');
+@import url('@fontsource/nunito/600.css');
+@import url('@fontsource/nunito/700.css');
+@import url('@fontsource/nunito/800.css');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Romantic Valentine palette */
+    --background: 350 100% 98%;
+    --foreground: 350 60% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 350 60% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 350 60% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Deep romantic pink */
+    --primary: 350 80% 55%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Soft blush */
+    --secondary: 350 60% 92%;
+    --secondary-foreground: 350 60% 30%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 350 40% 95%;
+    --muted-foreground: 350 30% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Rose accent */
+    --accent: 340 75% 65%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 350 30% 88%;
+    --input: 350 30% 88%;
+    --ring: 350 80% 55%;
 
-    --radius: 0.5rem;
+    --radius: 1rem;
 
-    --sidebar-background: 0 0% 98%;
-
-    --sidebar-foreground: 240 5.3% 26.1%;
-
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Custom romantic colors */
+    --cream: 40 60% 97%;
+    --blush: 350 70% 90%;
+    --rose: 350 80% 70%;
+    --deep-rose: 350 70% 45%;
+    --heart-red: 0 85% 55%;
+    
+    /* Gradients */
+    --gradient-romantic: linear-gradient(135deg, hsl(350 100% 98%) 0%, hsl(350 70% 95%) 50%, hsl(350 60% 92%) 100%);
+    --gradient-button-yes: linear-gradient(135deg, hsl(350 80% 55%) 0%, hsl(340 85% 50%) 50%, hsl(0 80% 60%) 100%);
+    --gradient-button-no: linear-gradient(135deg, hsl(350 50% 85%) 0%, hsl(350 40% 80%) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(350 90% 70%) 0%, hsl(340 85% 60%) 100%);
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(350 80% 55% / 0.25);
+    --shadow-glow: 0 0 40px hsl(350 80% 55% / 0.4);
+    --shadow-card: 0 10px 40px -10px hsl(350 60% 30% / 0.15);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 350 30% 10%;
+    --foreground: 350 20% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 350 25% 15%;
+    --card-foreground: 350 20% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 350 25% 15%;
+    --popover-foreground: 350 20% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 350 80% 60%;
+    --primary-foreground: 350 30% 10%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 350 30% 20%;
+    --secondary-foreground: 350 20% 90%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 350 25% 18%;
+    --muted-foreground: 350 20% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 340 70% 55%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 350 25% 22%;
+    --input: 350 25% 22%;
+    --ring: 350 80% 60%;
   }
 }
 
@@ -99,7 +98,116 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground;
+  html {
+    font-family: 'Nunito', system-ui, sans-serif;
   }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    background: var(--gradient-romantic);
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .btn-yes {
+    background: var(--gradient-button-yes);
+    @apply text-white font-bold rounded-full shadow-lg transition-all duration-300;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .btn-yes:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+  }
+
+  .btn-no {
+    background: var(--gradient-button-no);
+    @apply font-semibold rounded-full transition-all duration-200;
+  }
+
+  .btn-no:hover {
+    @apply opacity-90;
+  }
+
+  .card-romantic {
+    @apply bg-card rounded-3xl p-8;
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(10px);
+  }
+}
+
+@layer utilities {
+  .text-romantic {
+    @apply text-foreground;
+  }
+
+  .bg-cream {
+    background-color: hsl(var(--cream));
+  }
+
+  .bg-blush {
+    background-color: hsl(var(--blush));
+  }
+
+  .text-heart {
+    color: hsl(var(--heart-red));
+  }
+
+  .text-rose {
+    color: hsl(var(--rose));
+  }
+
+  .text-deep-rose {
+    color: hsl(var(--deep-rose));
+  }
+}
+
+/* Floating hearts animation */
+@keyframes float-up {
+  0% {
+    transform: translateY(100vh) rotate(0deg) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(90vh) rotate(10deg) scale(1);
+  }
+  90% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-10vh) rotate(360deg) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes pulse-heart {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+.animate-float-up {
+  animation: float-up linear forwards;
+}
+
+.animate-pulse-heart {
+  animation: pulse-heart 1s ease-in-out infinite;
+}
+
+.animate-wiggle {
+  animation: wiggle 0.5s ease-in-out infinite;
 }
