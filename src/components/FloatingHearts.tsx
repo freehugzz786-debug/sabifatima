@@ -7,7 +7,10 @@ interface Heart {
   size: number;
   duration: number;
   delay: number;
+  emoji: string;
 }
+
+const heartEmojis = ["❤️", "💕", "💗", "💖", "💘", "✨"];
 
 const FloatingHearts = () => {
   const [hearts, setHearts] = useState<Heart[]>([]);
@@ -15,13 +18,14 @@ const FloatingHearts = () => {
   useEffect(() => {
     const generateHearts = () => {
       const newHearts: Heart[] = [];
-      for (let i = 0; i < 15; i++) {
+      for (let i = 0; i < 20; i++) {
         newHearts.push({
           id: i,
           x: Math.random() * 100,
-          size: Math.random() * 20 + 12,
-          duration: Math.random() * 8 + 10,
-          delay: Math.random() * 10,
+          size: Math.random() * 18 + 14,
+          duration: Math.random() * 10 + 12,
+          delay: Math.random() * 12,
+          emoji: heartEmojis[Math.floor(Math.random() * heartEmojis.length)],
         });
       }
       setHearts(newHearts);
@@ -35,15 +39,16 @@ const FloatingHearts = () => {
       {hearts.map((heart) => (
         <motion.div
           key={heart.id}
-          className="absolute text-primary/30"
+          className="absolute"
           style={{
             left: `${heart.x}%`,
             fontSize: `${heart.size}px`,
+            opacity: 0.25,
           }}
           initial={{ y: "100vh", opacity: 0, rotate: 0, scale: 0 }}
           animate={{
             y: "-10vh",
-            opacity: [0, 1, 1, 0],
+            opacity: [0, 0.3, 0.3, 0],
             rotate: 360,
             scale: [0, 1, 1, 0.5],
           }}
@@ -54,7 +59,7 @@ const FloatingHearts = () => {
             ease: "linear",
           }}
         >
-          ❤️
+          {heart.emoji}
         </motion.div>
       ))}
     </div>
