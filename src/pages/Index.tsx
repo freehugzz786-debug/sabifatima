@@ -1,8 +1,8 @@
 import FloatingHearts from "@/components/FloatingHearts";
-import ValentineCard from "@/components/ValentineCard";
 import ValentineElements from "@/components/ValentineElements";
 import HeartCursorTrail from "@/components/HeartCursorTrail";
 import SoundToggle from "@/components/SoundToggle";
+import JourneyController from "@/components/journey/JourneyController";
 
 const Index = () => {
   return (
@@ -17,8 +17,8 @@ const Index = () => {
       {/* Cursor Trail */}
       <HeartCursorTrail />
       
-      {/* Main Content */}
-      <ValentineCard />
+      {/* Main Content - Multi-Stage Journey */}
+      <JourneyController />
     </div>
   );
 };
